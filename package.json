@@ -1,15 +1,25 @@
 {
-  "name": "polymer-starter-kit",
-  "license": "BSD-3-Clause",
+  "name": "polydex",
+  "version": "0.0.0",
+  "description": "Pokédex built with Polymer",
+  "author": "Abdón Rodríguez Davila <a@abdonrd.com> (https://abdonrd.com)",
+  "homepage": "https://github.com/abdonrd/polydex",
+  "license": "MIT",
+  "repository": "abdonrd/polydex",
   "devDependencies": {
-    "eslint": "^3.19.0",
-    "eslint-config-google": "^0.7.0",
-    "eslint-plugin-html": "^2.0.0"
+    "eslint": "^4.5.0",
+    "eslint-config-ibmresearch": "^0.8.0",
+    "eslint-plugin-html": "^3.2.0",
+    "polymer-cli": "^1.5.0"
   },
   "scripts": {
-    "lint": "npm run lint:javascript && polymer lint",
-    "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
-    "test": "polymer test",
-    "test:integration": "polymer build # test that psk builds without error with the CLI"
-  }
+    "serve": "polymer serve",
+    "lint": "eslint . --ext js,html --ignore-path .gitignore",
+    "test:integration": "yarn run build",
+    "build": "polymer build"
+  },
+  "engines": {
+    "node": ">=6.0"
+  },
+  "private": true
 }

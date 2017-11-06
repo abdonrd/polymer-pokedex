@@ -1,11 +1,10 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/my-app.html",
+  "shell": "src/app-shell.html",
   "fragments": [
-    "src/my-view1.html",
-    "src/my-view2.html",
-    "src/my-view3.html",
-    "src/my-view404.html"
+    "src/pages/page-not-found.html",
+    "src/pages/page-pokemons-detail.html",
+    "src/pages/page-pokemons-list.html"
   ],
   "sources": [
     "src/**/*",

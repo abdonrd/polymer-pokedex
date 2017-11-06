@@ -1,0 +1,32 @@
+<!--
+@license
+
+Copyright (c) 2017-present, Abdón Rodríguez Davila (@abdonrd).
+
+This source code is licensed under the MIT license found in the LICENSE file in
+the root directory of this source tree.
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="page-not-found">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    Oops you hit a 404. <a href="[[rootPath]]">Head back to home.</a>
+  </template>
+
+  <script>
+    class PageNotFound extends Polymer.Element {
+      static get is() {
+        return 'page-not-found';
+      }
+    }
+
+    customElements.define(PageNotFound.is, PageNotFound);
+  </script>
+</dom-module>

@@ -1,0 +1,32 @@
+<!--
+@license
+
+Copyright (c) 2017-present, Abdón Rodríguez Davila (@abdonrd).
+
+This source code is licensed under the MIT license found in the LICENSE file in
+the root directory of this source tree.
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="page-pokemons-detail">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    page-pokemons-detail
+  </template>
+
+  <script>
+    class PagePokemonsDetail extends Polymer.Element {
+      static get is() {
+        return 'page-pokemons-detail';
+      }
+    }
+
+    customElements.define(PagePokemonsDetail.is, PagePokemonsDetail);
+  </script>
+</dom-module>

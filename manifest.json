@@ -1,7 +1,7 @@
 {
-  "name": "My App",
-  "short_name": "My App",
-  "description": "My App description",
+  "name": "Polydex",
+  "short_name": "Polydex",
+  "description": "Pokédex built with Polymer",
   "icons": [
     {
       "src": "images/manifest/icon-192x192.png",

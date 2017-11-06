@@ -1,0 +1,128 @@
+<!--
+@license
+
+Copyright (c) 2017-present, Abdón Rodríguez Davila (@abdonrd).
+
+This source code is licensed under the MIT license found in the LICENSE file in
+the root directory of this source tree.
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+
+<dom-module id="app-shell">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <app-location
+        route="{{_route}}"
+        url-space-regex="^[[rootPath]]">
+    </app-location>
+    <app-route
+        route="{{_route}}"
+        pattern="[[rootPath]]:pageId"
+        data="{{_routeData}}">
+    </app-route>
+    <app-route
+        route="{{_route}}"
+        pattern="[[rootPath]]pokemons/:pokemonId"
+        data="{{_pokemonsRouteData}}">
+    </app-route>
+
+    <iron-pages
+        selected="[[_selectedPageId]]"
+        attr-for-selected="name"
+        fallback-selection="notFound"
+        role="main">
+      <page-pokemons-list name="pokemonsList"></page-pokemons-list>
+      <page-pokemons-detail name="pokemonsDetail"></page-pokemons-detail>
+      <page-not-found name="notFound"></page-not-found>
+    </iron-pages>
+  </template>
+
+  <script>
+    class AppShell extends Polymer.Element {
+      static get is() {
+        return 'app-shell';
+      }
+
+      static get properties() {
+        return {
+          /**
+           * The default selected page id.
+           */
+          defaultSelectedPageId: {
+            type: String,
+            value: 'pokemonsList'
+          },
+
+          _routeData: {
+            type: Object
+          },
+
+          _routeTail: {
+            type: Object
+          },
+
+          _pokemonsRouteData: {
+            type: Object
+          },
+
+          _pagesPaths: {
+            type: Object,
+            value: () => {
+              return {
+                notFound: 'pages/page-not-found.html',
+                pokemonsList: 'pages/page-pokemons-list.html',
+                pokemonsDetail: 'pages/page-pokemons-detail.html'
+              };
+            }
+          },
+
+          _selectedPageId: {
+            type: String,
+            observer: '_selectedPageIdChanged'
+          }
+        };
+      }
+
+      static get observers() {
+        return [
+          '_routePageIdChanged(_routeData.pageId, _pokemonsRouteData.pokemonId)'
+        ];
+      }
+
+      _routePageIdChanged(pageId, pokemonId) {
+        if (pageId === 'pokemons' && pokemonId) {
+          this._selectedPageId = 'pokemonsDetail';
+        } else if (pageId === 'pokemons') {
+          this._selectedPageId = 'pokemonsList';
+        } else {
+          this._selectedPageId = pageId || this.defaultSelectedPageId;
+        }
+      }
+
+      _selectedPageIdChanged(_selectedPageId) {
+        if (_selectedPageId in this._pagesPaths) {
+          this._importPage(_selectedPageId);
+        } else {
+          this._importPage('notFound');
+        }
+      }
+
+      _importPage(pageId) {
+        const pagePath = this._pagesPaths[pageId];
+
+        Polymer.importHref(this.resolveUrl(pagePath), null, null, true);
+      }
+    }
+
+    customElements.define(AppShell.is, AppShell);
+  </script>
+</dom-module>
