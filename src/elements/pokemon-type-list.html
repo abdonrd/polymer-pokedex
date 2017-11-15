@@ -8,8 +8,9 @@ the root directory of this source tree.
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../elements/pokemon-type-item.html">
 
-<dom-module id="page-pokemons-list">
+<dom-module id="pokemon-type-list">
   <template>
     <style>
       :host {
@@ -24,51 +25,42 @@ the root directory of this source tree.
         margin: 0;
         padding: 0;
         list-style-type: none;
+        margin-bottom: 1em;
       }
 
-      li,
-      li a {
+      li {
         display: inline-flex;
       }
 
-      img {
-        width: 100px;
-        height: 100px;
-        line-height: 100px;
-        text-align: center;
+      li + li {
+        margin-left: .5em;
       }
     </style>
 
     <ul>
-      <template
-          is="dom-repeat"
-          items="[[_pokemons]]"
-          as="pokemon"
-          filter="[[_filterPokemon(searchString)]]">
+      <template is="dom-repeat" items="[[types]]" as="type">
         <li>
-          <a href$="[[rootPath]]pokemons/[[pokemon.slug]]">
-            <img src$="[[pokemon.image]]" alt$="[[pokemon.name]]">
-          </a>
+          <pokemon-type-item>[[type.name]]</pokemon-type-item>
         </li>
       </template>
     </ul>
   </template>
 
   <script>
-    class PagePokemonsList extends Polymer.Element {
+    class PokemonTypeList extends Polymer.Element {
       static get is() {
-        return 'page-pokemons-list';
+        return 'pokemon-type-list';
       }
 
       static get properties() {
         return {
-          _pokemons: {
+          types: {
             type: Array
           }
         };
       }
     }
 
-    customElements.define(PagePokemonsList.is, PagePokemonsList);
+    customElements.define(PokemonTypeList.is, PokemonTypeList);
   </script>
 </dom-module>

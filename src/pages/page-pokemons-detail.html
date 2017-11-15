@@ -8,22 +8,80 @@ the root directory of this source tree.
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../elements/pokemon-type-list.html">
 
 <dom-module id="page-pokemons-detail">
   <template>
     <style>
       :host {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      img {
+        width: 256px;
+        height: 256px;
+        line-height: 256px;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 1.5em;
+        font-weight: normal;
+        margin: 1em 0;
+      }
+
+      .weight-height {
+        font-size: .9em;
+      }
+
+      .weight,
+      .height {
+        display: inline;
+      }
+
+      .weight {
+        margin-right: 1em;
       }
     </style>
 
-    page-pokemons-detail
+    <img src$="[[_pokemon.image]]" alt$="[[_pokemon.name]]">
+
+    <h1>[[_pokemon.id]] [[_upperCase(_pokemon.name)]]</h1>
+
+    <pokemon-type-list types="[[_pokemon.types]]"></pokemon-type-list>
+
+    <div class="weight-height">
+      <div class="weight">WEIGHT: [[_formatWeight(_pokemon.weight)]] kg</div>
+      <div class="height">HEIGHT: [[_formatHeight(_pokemon.height)]] m</div>
+    </div>
   </template>
 
   <script>
     class PagePokemonsDetail extends Polymer.Element {
       static get is() {
         return 'page-pokemons-detail';
+      }
+
+      static get properties() {
+        return {
+          _pokemon: {
+            type: Object
+          }
+        };
+      }
+
+      _formatWeight(weight) {
+        return weight / 10;
+      }
+
+      _formatHeight(height) {
+        return height / 10;
+      }
+
+      _upperCase(string) {
+        return string.toUpperCase();
       }
     }
 
