@@ -8,12 +8,69 @@ the root directory of this source tree.
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/vaadin-text-field/vaadin-text-field.html">
+<link rel="import" href="../app-icons.html">
+
+<dom-module id="polydex-text-field" theme-for="vaadin-text-field">
+  <template>
+    <style>
+      [part="input-field"] {
+        background-color: #fafafa;
+        padding: 0 14px;
+        border-radius: 3px;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),
+                    0 1px 1px 0 rgba(0,0,0,.14),
+                    0 2px 1px -1px rgba(0,0,0,.12);
+      }
+
+      [part="input-field"] ::slotted([slot="prefix"]) {
+        color: #737373;
+        margin-right: 14px;
+        cursor: pointer;
+      }
+
+      [part="value"] {
+        background-color: #fafafa;
+        padding: 14px 0;
+        font-size: 1em;
+        border: none;
+        border-radius: inherit;
+        outline: none;
+      }
+
+      [part="value"]::-webkit-input-placeholder {
+        color: #cccccc;
+      }
+
+      [part="value"]:-ms-input-placeholder {
+        color: #cccccc;
+      }
+
+      [part="value"]::-moz-placeholder {
+        color: #cccccc;
+      }
+
+      [part="value"]::placeholder {
+        color: #cccccc;
+      }
+    </style>
+  </template>
+</dom-module>
 
 <dom-module id="page-pokemons-list">
   <template>
     <style>
       :host {
         display: block;
+        background: linear-gradient(#f9f1ff, #c8e0ff);
+        height: 100vh;
+        overflow-x: auto;
+      }
+
+      vaadin-text-field {
+        width: calc(100% - 8px * 2);
+        margin: 8px;
       }
 
       ul {
@@ -21,7 +78,7 @@ the root directory of this source tree.
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        margin: 0;
+        margin: 8px;
         padding: 0;
         list-style-type: none;
       }
@@ -32,12 +89,18 @@ the root directory of this source tree.
       }
 
       img {
-        width: 100px;
-        height: 100px;
-        line-height: 100px;
+        width: 96px;
+        height: 96px;
+        line-height: 96px;
         text-align: center;
       }
     </style>
+
+    <vaadin-text-field
+        value="{{searchString::input}}"
+        placeholder="Search for Pokémon...">
+      <iron-icon icon="app-icons:search" slot="prefix"></iron-icon>
+    </vaadin-text-field>
 
     <ul>
       <template
@@ -66,6 +129,19 @@ the root directory of this source tree.
             type: Array
           }
         };
+      }
+
+      _filterPokemon(searchString) {
+        if (!searchString) {
+          return null;
+        } else {
+          searchString = searchString.toLowerCase();
+
+          return (pokemon) => {
+            const pokemonName = pokemon.name.toLowerCase();
+            return pokemonName.indexOf(searchString.toLowerCase()) !== -1;
+          };
+        }
       }
     }
 
