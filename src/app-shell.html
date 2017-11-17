@@ -9,7 +9,6 @@ the root directory of this source tree.
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
-<link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 
 <dom-module id="app-shell">
@@ -24,16 +23,6 @@ the root directory of this source tree.
         route="{{_route}}"
         url-space-regex="^[[rootPath]]">
     </app-location>
-    <app-route
-        route="{{_route}}"
-        pattern="[[rootPath]]:pageId"
-        data="{{_routeData}}">
-    </app-route>
-    <app-route
-        route="{{_route}}"
-        pattern="[[rootPath]]pokemons/:pokemonId"
-        data="{{_pokemonsRouteData}}">
-    </app-route>
 
     <iron-pages
         selected="[[_selectedPageId]]"
@@ -54,23 +43,7 @@ the root directory of this source tree.
 
       static get properties() {
         return {
-          /**
-           * The default selected page id.
-           */
-          defaultSelectedPageId: {
-            type: String,
-            value: 'pokemonsList'
-          },
-
-          _routeData: {
-            type: Object
-          },
-
-          _routeTail: {
-            type: Object
-          },
-
-          _pokemonsRouteData: {
+          _route: {
             type: Object
           },
 
@@ -94,17 +67,21 @@ the root directory of this source tree.
 
       static get observers() {
         return [
-          '_routePageIdChanged(_routeData.pageId, _pokemonsRouteData.pokemonId)'
+          '_routeChanged(_route)'
         ];
       }
 
-      _routePageIdChanged(pageId, pokemonId) {
-        if (pageId === 'pokemons' && pokemonId) {
-          this._selectedPageId = 'pokemonsDetail';
-        } else if (pageId === 'pokemons') {
+      _routeChanged(_route) {
+        const pathParts = _route.path.slice(1).split('/');
+        const pageId = pathParts[0];
+        const pokemonId = pathParts[1];
+
+        if (pageId === '' || (pageId === 'pokemons' && !pokemonId)) {
           this._selectedPageId = 'pokemonsList';
+        } else if (pageId === 'pokemons' && pokemonId) {
+          this._selectedPageId = 'pokemonsDetail';
         } else {
-          this._selectedPageId = pageId || this.defaultSelectedPageId;
+          this._selectedPageId = pageId;
         }
       }
 
