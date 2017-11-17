@@ -1,0 +1,66 @@
+<!--
+@license
+
+Copyright (c) 2017-present, Abdón Rodríguez Davila (@abdonrd).
+
+This source code is licensed under the MIT license found in the LICENSE file in
+the root directory of this source tree.
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/vaadin-button/vaadin-button.html">
+<link rel="import" href="../app-icons.html">
+
+<dom-module id="close-button">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+      }
+
+      [part="button"] {
+        border-radius: 50%;
+        color: #228899;
+        background-color: rgba(242, 255, 252, 0.97);
+        border: 1px solid #228899;
+        padding: 6px;
+        position: relative;
+      }
+
+      [part="button"]::after {
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+        background-color: rgba(255, 255, 255, 0.5);
+        z-index: -1;
+        border-radius: 50%;
+        box-shadow: 0 0 0px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      iron-icon {
+        width: 24px;
+        height: 24px;
+      }
+    </style>
+
+    <button id="button" type="button" part="button">
+      <iron-icon icon="app-icons:close" alt="Close"></iron-icon>
+    </button>
+  </template>
+
+  <script>
+    /* global Vaadin: false */
+
+    class CloseButton extends Vaadin.ButtonElement {
+      static get is() {
+        return 'close-button';
+      }
+    }
+
+    customElements.define(CloseButton.is, CloseButton);
+  </script>
+</dom-module>

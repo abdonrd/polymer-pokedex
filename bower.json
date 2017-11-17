@@ -5,8 +5,8 @@
     "iron-icon": "PolymerElements/iron-icon#^2.0.0",
     "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^2.0.0",
     "iron-pages": "PolymerElements/iron-pages#^2.0.0",
-    "paper-icon-button": "PolymerElements/paper-icon-button#^2.0.0",
     "polymer": "Polymer/polymer#^2.2.0",
+    "vaadin-button": "vaadin/vaadin-button#^1.0.0",
     "vaadin-text-field": "vaadin/vaadin-text-field#^1.1.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
   },

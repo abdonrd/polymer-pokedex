@@ -8,9 +8,8 @@ the root directory of this source tree.
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../elements/close-button.html">
 <link rel="import" href="../elements/pokemon-type-list.html">
-<link rel="import" href="../app-icons.html">
 
 <dom-module id="page-pokemons-detail">
   <template>
@@ -25,6 +24,7 @@ the root directory of this source tree.
         background-image: url("../../images/page-pokemons-detail-background.png"),
                           linear-gradient(#d2bbeb, #8a97ed);
         animation: 10s linear infinite animateBackground;
+        padding-bottom: 70px; /* Space for the <close-button> */
       }
 
       @keyframes animateBackground {
@@ -42,36 +42,6 @@ the root directory of this source tree.
         position: fixed;
         bottom: 32px;
         color: inherit;
-      }
-
-      .close-button paper-icon-button {
-        border-radius: 50%;
-        color: #228899;
-        background-color: rgba(242, 255, 252, 0.97);
-        position: relative;
-      }
-
-      .close-button paper-icon-button::after {
-        position: absolute;
-        content: '';
-        border: 2px solid #228899;
-        top: -2px;
-        bottom: -2px;
-        left: -2px;
-        right: -2px;
-        border-radius: 50%;
-      }
-
-      .close-button paper-icon-button::before {
-        position: absolute;
-        content: '';
-        border: 5px solid rgba(230, 230, 230, 0.7);
-        top: -7px;
-        bottom: -7px;
-        left: -7px;
-        right: -7px;
-        border-radius: 50%;
-        box-shadow: 0 0 0px 3px rgba(0, 0, 0, 0.1);
       }
 
       img {
@@ -104,7 +74,7 @@ the root directory of this source tree.
     </style>
 
     <a href$="[[rootPath]]" tabindex="-1" class="close-button">
-      <paper-icon-button icon="app-icons:close"></paper-icon-button>
+      <close-button></close-button>
     </a>
 
     <img src$="[[_pokemon.image]]" alt$="[[_pokemon.name]]">
