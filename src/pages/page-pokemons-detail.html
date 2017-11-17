@@ -9,6 +9,7 @@ the root directory of this source tree.
 
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../elements/close-button.html">
+<link rel="import" href="../elements/pokemon-evolutions-list.html">
 <link rel="import" href="../elements/pokemon-type-list.html">
 
 <dom-module id="page-pokemons-detail">
@@ -20,11 +21,15 @@ the root directory of this source tree.
         align-items: center;
         height: 100vh;
         overflow-x: auto;
+        color: #ffffff;
         background-color: #d2bbeb;
         background-image: url("../../images/page-pokemons-detail-background.png"),
                           linear-gradient(#d2bbeb, #8a97ed);
         animation: 10s linear infinite animateBackground;
-        padding-bottom: 70px; /* Space for the <close-button> */
+      }
+
+      :host > *:last-child {
+        padding-bottom: 100px;
       }
 
       @keyframes animateBackground {
@@ -54,9 +59,19 @@ the root directory of this source tree.
       }
 
       h1 {
-        font-size: 1.5em;
+        font-size: 2em;
         font-weight: normal;
-        margin: 1em 0;
+        margin: .5em 0;
+      }
+
+      h2 {
+        text-transform: uppercase;
+        font-size: 1.3em;
+        letter-spacing: 1px;
+        width: 300px;
+        border-top: 2px solid rgba(255, 255, 255, 0.5);
+        text-align: center;
+        padding-top: .5em;
       }
 
       .weight-height {
@@ -70,6 +85,10 @@ the root directory of this source tree.
 
       .weight {
         margin-right: 1em;
+      }
+
+      pokemon-evolutions {
+        margin-top: 1em;
       }
     </style>
 
@@ -87,6 +106,10 @@ the root directory of this source tree.
       <div class="weight">WEIGHT: [[_formatWeight(_pokemon.weight)]] kg</div>
       <div class="height">HEIGHT: [[_formatHeight(_pokemon.height)]] m</div>
     </div>
+
+    <h2>Evolution</h2>
+
+    <pokemon-evolutions-list evolutions="[[_pokemon.evolutions]]"></pokemon-evolutions-list>
   </template>
 
   <script>

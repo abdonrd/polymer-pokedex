@@ -1,0 +1,95 @@
+<!--
+@license
+
+Copyright (c) 2017-present, Abdón Rodríguez Davila (@abdonrd).
+
+This source code is licensed under the MIT license found in the LICENSE file in
+the root directory of this source tree.
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="pokemon-evolutions-item">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+      }
+
+      ul li,
+      ul li a {
+        display: inline-flex;
+      }
+
+      ul li:not(:last-of-type)::after {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        content: '→';
+        padding: 0 4px;
+        font-weight: bold;
+        font-size: 2em;
+      }
+
+      ul li a {
+        flex-direction: column;
+        align-items: center;
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        width: 90px;
+        height: 90px;
+        line-height: 90px;
+        text-align: center;
+      }
+
+      span {
+        text-transform: uppercase;
+        font-size: .8em;
+      }
+    </style>
+
+    <ul>
+      <template is="dom-repeat" items="[[evolution]]" as="pokemon">
+        <li>
+          <a href$="[[rootPath]]pokemons/[[pokemon.slug]]">
+            <img src$="[[pokemon.image]]" alt$="[[pokemon.name]]">
+            <span>[[pokemon.name]]</span>
+          </a>
+        </li>
+      </template>
+    </ul>
+  </template>
+
+  <script>
+    class PokemonEvolutionsItem extends Polymer.Element {
+      static get is() {
+        return 'pokemon-evolutions-item';
+      }
+
+      static get properties() {
+        return {
+          evolution: {
+            type: Array
+          }
+        };
+      }
+    }
+
+    customElements.define(PokemonEvolutionsItem.is, PokemonEvolutionsItem);
+  </script>
+</dom-module>
