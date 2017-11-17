@@ -8,7 +8,9 @@ the root directory of this source tree.
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../elements/pokemon-type-list.html">
+<link rel="import" href="../app-icons.html">
 
 <dom-module id="page-pokemons-detail">
   <template>
@@ -17,9 +19,64 @@ the root directory of this source tree.
         display: flex;
         flex-direction: column;
         align-items: center;
+        height: 100vh;
+        overflow-x: auto;
+        background-color: #d2bbeb;
+        background-image: url("../../images/page-pokemons-detail-background.png"),
+                          linear-gradient(#d2bbeb, #8a97ed);
+        animation: 10s linear infinite animateBackground;
+      }
+
+      @keyframes animateBackground {
+        from {
+          background-position-x: 0;
+        }
+
+        to {
+          background-position-x: 500px;
+        }
+      }
+
+      .close-button {
+        display: inline-block;
+        position: fixed;
+        bottom: 32px;
+        color: inherit;
+      }
+
+      .close-button paper-icon-button {
+        border-radius: 50%;
+        color: #228899;
+        background-color: rgba(242, 255, 252, 0.97);
+        position: relative;
+      }
+
+      .close-button paper-icon-button::after {
+        position: absolute;
+        content: '';
+        border: 2px solid #228899;
+        top: -2px;
+        bottom: -2px;
+        left: -2px;
+        right: -2px;
+        border-radius: 50%;
+      }
+
+      .close-button paper-icon-button::before {
+        position: absolute;
+        content: '';
+        border: 5px solid rgba(230, 230, 230, 0.7);
+        top: -7px;
+        bottom: -7px;
+        left: -7px;
+        right: -7px;
+        border-radius: 50%;
+        box-shadow: 0 0 0px 3px rgba(0, 0, 0, 0.1);
       }
 
       img {
+        display: flex;
+        flex: 0 0 256px;
         width: 256px;
         height: 256px;
         line-height: 256px;
@@ -45,6 +102,10 @@ the root directory of this source tree.
         margin-right: 1em;
       }
     </style>
+
+    <a href$="[[rootPath]]" tabindex="-1" class="close-button">
+      <paper-icon-button icon="app-icons:close"></paper-icon-button>
+    </a>
 
     <img src$="[[_pokemon.image]]" alt$="[[_pokemon.name]]">
 
