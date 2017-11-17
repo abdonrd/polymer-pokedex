@@ -98,7 +98,7 @@ the root directory of this source tree.
 
     <img src$="[[_pokemon.image]]" alt$="[[_pokemon.name]]">
 
-    <h1>[[_pokemon.id]] [[_upperCase(_pokemon.name)]]</h1>
+    <h1>[[_formatId(_pokemon.id)]] [[_upperCase(_pokemon.name)]]</h1>
 
     <pokemon-type-list types="[[_pokemon.types]]"></pokemon-type-list>
 
@@ -124,6 +124,10 @@ the root directory of this source tree.
             type: Object
           }
         };
+      }
+
+      _formatId(id) {
+        return ('000' + id).slice(-3);
       }
 
       _formatWeight(weight) {
