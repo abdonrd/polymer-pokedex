@@ -59,8 +59,7 @@ the root directory of this source tree.
           },
 
           _selectedPageId: {
-            type: String,
-            observer: '_selectedPageIdChanged'
+            type: String
           }
         };
       }
@@ -76,26 +75,24 @@ the root directory of this source tree.
         const pageId = pathParts[0];
         const pokemonId = pathParts[1];
 
-        if (pageId === '' || (pageId === 'pokemons' && !pokemonId)) {
-          this._selectedPageId = 'pokemonsList';
-        } else if (pageId === 'pokemons' && pokemonId) {
-          this._selectedPageId = 'pokemonsDetail';
+        if (pageId === '') { // Route: /
+          this._selectPage('pokemonsList');
+        } else if (pageId === 'pokemons' && !pokemonId) { // Route: /pokemons
+          this._selectPage('pokemonsList');
+        } else if (pageId === 'pokemons' && pokemonId) { // Route: /pokemons/:id
+          this._selectPage('pokemonsDetail');
         } else {
-          this._selectedPageId = pageId;
+          this._selectPage(pageId);
         }
       }
 
-      _selectedPageIdChanged(_selectedPageId) {
-        if (_selectedPageId in this._pagesPaths) {
-          this._importPage(_selectedPageId);
-        } else {
-          this._importPage('notFound');
-        }
+      _selectPage(pageId) {
+        this._importPage(pageId);
+        this._selectedPageId = pageId;
       }
 
       _importPage(pageId) {
-        const pagePath = this._pagesPaths[pageId];
-
+        const pagePath = this._pagesPaths[pageId] || this._pagesPaths['notFound'];
         Polymer.importHref(this.resolveUrl(pagePath), null, null, true);
       }
     }
