@@ -1,0 +1,17 @@
+language: node_js
+dist: trusty
+sudo: required
+node_js:
+  - "6"
+cache:
+  yarn: true
+install:
+  - yarn global add bower
+  - yarn install
+  - bower install
+before_script:
+  - yarn run lint
+script:
+  - yarn run test:integration
+before_deploy:
+  - yarn run build

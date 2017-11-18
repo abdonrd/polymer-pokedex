@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/abdonrd/polydex.svg?token=rdiyKAed3D5Z3QVHAwde&branch=master)](https://travis-ci.com/abdonrd/polydex)
+
 # Polydex
 
 Pokédex built with Polymer.
