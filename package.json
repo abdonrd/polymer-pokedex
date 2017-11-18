@@ -16,7 +16,8 @@
     "serve": "polymer serve",
     "lint": "eslint . --ext js,html --ignore-path .gitignore",
     "test:integration": "yarn run build",
-    "build": "polymer build"
+    "build": "polymer build && yarn run build:add-data",
+    "build:add-data": "cp -r data/ build/data/"
   },
   "engines": {
     "node": ">=6.0"

@@ -7,8 +7,8 @@
     "src/pages/page-pokemons-list.html"
   ],
   "sources": [
-    "src/**/*",
-    "images/**/*"
+    "images/**/*",
+    "src/**/*"
   ],
   "extraDependencies": [
     "manifest.json",
