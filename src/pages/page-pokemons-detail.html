@@ -10,7 +10,6 @@ the root directory of this source tree.
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../elements/close-button.html">
 <link rel="import" href="../elements/pokemon-evolutions-list.html">
-<link rel="import" href="../elements/pokemon-type-list.html">
 
 <dom-module id="page-pokemons-detail">
   <template>
@@ -21,6 +20,7 @@ the root directory of this source tree.
         align-items: center;
         height: 100vh;
         overflow-x: auto;
+        padding: 0 16px;
         color: #ffffff;
         background-color: #d2bbeb;
         background-image: url("../../images/page-pokemons-detail-background.png"),
@@ -74,21 +74,30 @@ the root directory of this source tree.
         padding-top: .5em;
       }
 
-      .weight-height {
+      .attributes {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
         font-size: .9em;
+        text-align: center;
       }
 
-      .weight,
-      .height {
-        display: inline;
+      .attributes .attribute {
+        display: inline-flex;
+        margin: 0 .5em;
       }
 
-      .weight {
-        margin-right: 1em;
+      .attributes .attribute .name {
+        margin-right: .3em;
       }
 
-      pokemon-evolutions {
-        margin-top: 1em;
+      .attributes .attribute .name,
+      .attributes .attribute .value.type {
+        text-transform: uppercase;
+      }
+
+      .attributes .attribute .unit {
+        margin-left: .2em;
       }
     </style>
 
@@ -100,11 +109,21 @@ the root directory of this source tree.
 
     <h1>[[_formatId(_pokemon.id)]] [[_upperCase(_pokemon.name)]]</h1>
 
-    <pokemon-type-list types="[[_pokemon.types]]"></pokemon-type-list>
-
-    <div class="weight-height">
-      <div class="weight">WEIGHT: [[_formatWeight(_pokemon.weight)]] kg</div>
-      <div class="height">HEIGHT: [[_formatHeight(_pokemon.height)]] m</div>
+    <div class="attributes">
+      <span class="attribute">
+        <span class="name">Weight:</span>
+        <span class="value">[[_formatWeight(_pokemon.weight)]]</span>
+        <span class="unit">kg</span>
+      </span>
+      <span class="attribute">
+        <span class="name">Height:</span>
+        <span class="value">[[_formatHeight(_pokemon.height)]]</span>
+        <span class="unit">m</span>
+      </span>
+      <span class="attribute">
+        <span class="name">Type:</span>
+        <span class="value type">[[_formatTypes(_pokemon.types)]]</span>
+      </span>
     </div>
 
     <h2>Evolution</h2>
@@ -136,6 +155,10 @@ the root directory of this source tree.
 
       _formatHeight(height) {
         return height / 10;
+      }
+
+      _formatTypes(types) {
+        return types.map(type => type.name).join(' / ');
       }
 
       _upperCase(string) {
