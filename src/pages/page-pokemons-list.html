@@ -105,11 +105,11 @@ the root directory of this source tree.
     <ul>
       <template
           is="dom-repeat"
-          items="[[_pokemons]]"
+          items="[[pokemons]]"
           as="pokemon"
           filter="[[_filterPokemon(searchString)]]">
         <li>
-          <a href$="[[rootPath]]pokemons/[[pokemon.slug]]">
+          <a href$="[[rootPath]]pokemons/[[pokemon.id]]">
             <img src$="[[pokemon.image]]" alt$="[[pokemon.name]]">
           </a>
         </li>
@@ -125,7 +125,7 @@ the root directory of this source tree.
 
       static get properties() {
         return {
-          _pokemons: {
+          pokemons: {
             type: Array
           }
         };

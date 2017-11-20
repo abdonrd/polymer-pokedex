@@ -8,6 +8,7 @@ the root directory of this source tree.
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/utils/async.html">
 <link rel="import" href="../elements/close-button.html">
 <link rel="import" href="../elements/pokemon-evolutions-list.html">
 
@@ -15,71 +16,75 @@ the root directory of this source tree.
   <template>
     <style>
       :host {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        display: block;
+        text-align: center;
         height: 100vh;
         overflow-x: auto;
-        padding: 0 16px;
+        padding: 0 26px;
         color: #ffffff;
         background-color: #d2bbeb;
         background-image: url("../../images/page-pokemons-detail-background.png"),
                           linear-gradient(#d2bbeb, #8a97ed);
-        animation: 10s linear infinite animateBackground;
-      }
-
-      :host > *:last-child {
-        padding-bottom: 100px;
-      }
-
-      @keyframes animateBackground {
-        from {
-          background-position-x: 0;
-        }
-
-        to {
-          background-position-x: 500px;
-        }
-      }
-
-      .close-button {
-        display: inline-block;
-        position: fixed;
-        bottom: 32px;
-        color: inherit;
+        animation: 10s linear infinite animate-background;
       }
 
       img {
-        display: flex;
-        flex: 0 0 256px;
+        display: block;
+        margin: 0 auto;
         width: 256px;
         height: 256px;
         line-height: 256px;
         text-align: center;
+        transform: scale(.8);
+        animation-name: big;
+        animation-duration: .4s;
+        animation-fill-mode: forwards;
+      }
+
+      main {
+        padding-bottom: 100px;
+        transform: translateY(100vh);
+        animation-name: slide-up;
+        animation-duration: .6s;
+        animation-fill-mode: forwards;
       }
 
       h1 {
-        font-size: 2em;
+        font-size: 1.9em;
         font-weight: normal;
         margin: .5em 0;
       }
 
       h2 {
         text-transform: uppercase;
-        font-size: 1.3em;
-        letter-spacing: 1px;
+        font-size: 1.1em;
+        margin: 1em 0 .2em;
+        text-align: left;
+      }
+
+      .description {
+        color: #f6f6f6;
+        text-align: left;
+      }
+
+      h3 {
+        text-transform: uppercase;
+        font-size: 1.1em;
+        letter-spacing: 2px;
         width: 300px;
         border-top: 2px solid rgba(255, 255, 255, 0.5);
         text-align: center;
         padding-top: .5em;
+        margin: 1em auto;
       }
 
       .attributes {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        font-size: .9em;
+        font-size: .8em;
         text-align: center;
+        font-weight: bold;
       }
 
       .attributes .attribute {
@@ -99,36 +104,86 @@ the root directory of this source tree.
       .attributes .attribute .unit {
         margin-left: .2em;
       }
+
+      .close-button-container {
+        position: fixed;
+        bottom: 32px;
+        right: 0;
+        left: 0;
+        z-index: 1;
+      }
+
+      .close-button-container a {
+        display: inline-block;
+      }
+
+      @keyframes animate-background {
+        from {
+          background-position-x: 0;
+        }
+
+        to {
+          background-position-x: 500px;
+        }
+      }
+
+      @keyframes slide-up {
+        from {
+          transform: translateY(100vh);
+        }
+
+        to {
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes big {
+        from {
+          transform: scale(.8);
+        }
+
+        to {
+          transform: scale(1);
+        }
+      }
     </style>
 
-    <a href$="[[rootPath]]" tabindex="-1" class="close-button">
-      <close-button></close-button>
-    </a>
+    <img src$="[[pokemon.image]]" alt$="[[pokemon.name]]">
 
-    <img src$="[[_pokemon.image]]" alt$="[[_pokemon.name]]">
+    <main>
+      <h1>[[_formatId(pokemon.id)]] [[_upperCase(pokemon.name)]]</h1>
 
-    <h1>[[_formatId(_pokemon.id)]] [[_upperCase(_pokemon.name)]]</h1>
+      <div class="attributes">
+        <span class="attribute">
+          <span class="name">Weight:</span>
+          <span class="value">[[_formatWeight(pokemon.weight)]]</span>
+          <span class="unit">kg</span>
+        </span>
+        <span class="attribute">
+          <span class="name">Height:</span>
+          <span class="value">[[_formatHeight(pokemon.height)]]</span>
+          <span class="unit">m</span>
+        </span>
+        <span class="attribute">
+          <span class="name">Type:</span>
+          <span class="value type">[[_formatTypes(pokemon.types)]]</span>
+        </span>
+      </div>
 
-    <div class="attributes">
-      <span class="attribute">
-        <span class="name">Weight:</span>
-        <span class="value">[[_formatWeight(_pokemon.weight)]]</span>
-        <span class="unit">kg</span>
-      </span>
-      <span class="attribute">
-        <span class="name">Height:</span>
-        <span class="value">[[_formatHeight(_pokemon.height)]]</span>
-        <span class="unit">m</span>
-      </span>
-      <span class="attribute">
-        <span class="name">Type:</span>
-        <span class="value type">[[_formatTypes(_pokemon.types)]]</span>
-      </span>
+      <h2>[[pokemon.species]]</h2>
+      <div class="description">[[pokemon.description]]</div>
+
+      <template is="dom-if" if="[[pokemon.evolutions]]">
+        <h3>Evolution</h3>
+        <pokemon-evolutions-list evolutions="[[pokemon.evolutions]]"></pokemon-evolutions-list>
+      </template>
+    </main>
+
+    <div class="close-button-container">
+      <a href$="[[rootPath]]" tabindex="-1">
+        <close-button></close-button>
+      </a>
     </div>
-
-    <h2>Evolution</h2>
-
-    <pokemon-evolutions-list evolutions="[[_pokemon.evolutions]]"></pokemon-evolutions-list>
   </template>
 
   <script>
@@ -139,10 +194,15 @@ the root directory of this source tree.
 
       static get properties() {
         return {
-          _pokemon: {
-            type: Object
+          pokemon: {
+            type: Object,
+            observer: '_pokemonChanged'
           }
         };
+      }
+
+      _pokemonChanged() {
+        Polymer.Async.microTask.run(() => this.scrollTo(0, 0));
       }
 
       _formatId(id) {

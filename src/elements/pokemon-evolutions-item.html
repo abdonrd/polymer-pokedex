@@ -59,6 +59,7 @@ the root directory of this source tree.
 
       span {
         text-transform: uppercase;
+        font-weight: bold;
         font-size: .8em;
       }
     </style>
@@ -66,7 +67,7 @@ the root directory of this source tree.
     <ul>
       <template is="dom-repeat" items="[[evolution]]" as="pokemon">
         <li>
-          <a href$="[[rootPath]]pokemons/[[pokemon.slug]]">
+          <a href$="[[rootPath]]pokemons/[[pokemon.id]]">
             <img src$="[[pokemon.image]]" alt$="[[pokemon.name]]">
             <span>[[pokemon.name]]</span>
           </a>

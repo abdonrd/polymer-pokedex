@@ -17,28 +17,25 @@ the root directory of this source tree.
     <style>
       :host {
         display: inline-block;
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        box-shadow: 0 0 0px 2px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        padding: 5px;
       }
 
       [part="button"] {
-        border-radius: 50%;
-        color: #228899;
         background-color: rgba(242, 255, 252, 0.97);
+        border-radius: 50%;
         border: 1px solid #228899;
+        color: #228899;
+        cursor: inherit;
         padding: 6px;
-        position: relative;
       }
 
-      [part="button"]::after {
-        content: '';
-        position: absolute;
-        top: -5px;
-        left: -5px;
-        right: -5px;
-        bottom: -5px;
-        background-color: rgba(255, 255, 255, 0.5);
-        z-index: -1;
-        border-radius: 50%;
-        box-shadow: 0 0 0px 2px rgba(0, 0, 0, 0.1);
+      :host([focused]) [part="button"] {
+        outline: none;
+        background-color: rgba(221, 231, 229, 0.97);
       }
 
       iron-icon {

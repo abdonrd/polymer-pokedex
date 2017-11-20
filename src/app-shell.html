@@ -29,8 +29,14 @@ the root directory of this source tree.
         attr-for-selected="name"
         fallback-selection="notFound"
         role="main">
-      <page-pokemons-list name="pokemonsList"></page-pokemons-list>
-      <page-pokemons-detail name="pokemonsDetail"></page-pokemons-detail>
+      <page-pokemons-list
+          name="pokemonsList"
+          pokemons="[[_pokemons]]">
+      </page-pokemons-list>
+      <page-pokemons-detail
+          name="pokemonsDetail"
+          pokemon="[[_pokemonSelected]]">
+      </page-pokemons-detail>
       <page-not-found name="notFound"></page-not-found>
     </iron-pages>
   </template>
@@ -60,6 +66,11 @@ the root directory of this source tree.
 
           _selectedPageId: {
             type: String
+          },
+
+          _apiUrl: {
+            type: String,
+            value: 'https://polymer-pokedex.firebaseio.com'
           }
         };
       }
@@ -75,12 +86,20 @@ the root directory of this source tree.
         const pageId = pathParts[0];
         const pokemonId = pathParts[1];
 
-        if (pageId === '') { // Route: /
-          this._selectPage('pokemonsList');
-        } else if (pageId === 'pokemons' && !pokemonId) { // Route: /pokemons
-          this._selectPage('pokemonsList');
+        if (pageId === '' || (pageId === 'pokemons' && !pokemonId)) { // Route: / or /pokemons
+          fetch(`${this._apiUrl}/pokemons.json`).then((response) => {
+            return response.json();
+          }).then((jsonResponse) => {
+            this._pokemons = jsonResponse;
+            this._selectPage('pokemonsList');
+          });
         } else if (pageId === 'pokemons' && pokemonId) { // Route: /pokemons/:id
-          this._selectPage('pokemonsDetail');
+          fetch(`${this._apiUrl}/pokemon/${Number(pokemonId) - 1}.json`).then((response) => {
+            return response.json();
+          }).then((jsonResponse) => {
+            this._pokemonSelected = jsonResponse;
+            this._selectPage('pokemonsDetail');
+          });
         } else {
           this._selectPage(pageId);
         }
