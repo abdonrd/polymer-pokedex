@@ -35,6 +35,16 @@ module.exports = {
           name: 'pokemons-images'
         }
       }
+    },
+    {
+      urlPattern: /polymer-pokedex\.firebaseio\.com\/pokemon.*\.json/,
+      handler: 'cacheFirst',
+      options: {
+        cache: {
+          maxEntries: 200,
+          name: 'pokemons-data'
+        }
+      }
     }
   ]
 };
