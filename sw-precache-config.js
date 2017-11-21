@@ -12,7 +12,8 @@
 module.exports = {
   staticFileGlobs: [
     'bower_components/webcomponentsjs/webcomponents-loader.js',
-    'images/**/*',
+    'images/*',
+    'images/manifest/*',
     'manifest.json'
   ],
   runtimeCaching: [
@@ -22,6 +23,16 @@ module.exports = {
       options: {
         cache: {
           name: 'webcomponentsjs-polyfills-cache'
+        }
+      }
+    },
+    {
+      urlPattern: /\/data\/images\/pokemons\/.*/,
+      handler: 'cacheFirst',
+      options: {
+        cache: {
+          maxEntries: 200,
+          name: 'pokemons-images'
         }
       }
     }
