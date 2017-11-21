@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.com/abdonrd/polydex.svg?token=rdiyKAed3D5Z3QVHAwde&branch=master)](https://travis-ci.com/abdonrd/polydex)
+[![Build Status](https://travis-ci.org/abdonrd/polymer-pokedex.svg?branch=master)](https://travis-ci.org/abdonrd/polymer-pokedex)
 
-# Polydex
+# Polymer Pokédex
 
 Pokédex built with Polymer.
 
@@ -30,7 +30,7 @@ project's `polymer.json` file.
 
 You can configure your `polymer.json` file to create multiple builds. This is necessary if you will be serving different builds optimized for different browsers. You can define your own named builds, or use presets. See the documentation on [building your project for production](https://www.polymer-project.org/2.0/toolbox/build-for-production) for more information.
 
-The Polydex is configured to create three builds using [the three supported presets](https://www.polymer-project.org/2.0/toolbox/build-for-production#build-presets):
+The Polymer Pokédex is configured to create three builds using [the three supported presets](https://www.polymer-project.org/2.0/toolbox/build-for-production#build-presets):
 
 ```
 "builds": [

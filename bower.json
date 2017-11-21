@@ -1,5 +1,5 @@
 {
-  "name": "polydex",
+  "name": "polymer-pokedex",
   "dependencies": {
     "app-route": "PolymerElements/app-route#^2.0.0",
     "iron-icon": "PolymerElements/iron-icon#^2.0.0",

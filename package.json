@@ -1,11 +1,11 @@
 {
-  "name": "polydex",
+  "name": "polymer-pokedex",
   "version": "0.0.0",
   "description": "Pokédex built with Polymer",
   "author": "Abdón Rodríguez Davila <a@abdonrd.com> (https://abdonrd.com)",
-  "homepage": "https://github.com/abdonrd/polydex",
+  "homepage": "https://github.com/abdonrd/polymer-pokedex",
   "license": "MIT",
-  "repository": "abdonrd/polydex",
+  "repository": "abdonrd/polymer-pokedex",
   "devDependencies": {
     "eslint": "^4.5.0",
     "eslint-config-ibmresearch": "^0.8.0",
