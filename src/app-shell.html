@@ -8,6 +8,7 @@ the root directory of this source tree.
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 
@@ -15,7 +16,26 @@ the root directory of this source tree.
   <template>
     <style>
       :host {
+        --app-primary-color: #8a97ed;
+
         display: block;
+      }
+
+      .toast-website-updated.paper-toast-open {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 24px;
+      }
+
+      .toast-website-updated paper-button {
+        color: var(--app-primary-color);
+      }
+
+      /* Hide the toast button while the element has not been imported */
+      .toast-website-updated:not(.paper-toast-open) paper-button {
+        display: none;
       }
     </style>
 
@@ -40,6 +60,18 @@ the root directory of this source tree.
       </page-pokemons-detail>
       <page-not-found name="notFound"></page-not-found>
     </iron-pages>
+
+    <paper-toast
+        id="toastWebsiteOffline"
+        text="The website is cached for offline use!">
+    </paper-toast>
+    <paper-toast
+        id="toastWebsiteUpdated"
+        class="toast-website-updated"
+        duration="0"
+        text="New version available!">
+        <paper-button on-click="_reloadWebsite">Update</paper-button>
+    </paper-toast>
   </template>
 
   <script>
@@ -120,7 +152,62 @@ the root directory of this source tree.
 
       _importPage(pageId) {
         const pagePath = this._pagesPaths[pageId] || this._pagesPaths['notFound'];
-        Polymer.importHref(this.resolveUrl(pagePath), null, null, true);
+        Polymer.importHref(this.resolveUrl(pagePath), () => {
+          this._ensureLazyLoaded();
+        }, null, true);
+      }
+
+      _ensureLazyLoaded() {
+        // Load lazy resources after render and set `_loadComplete` when done.
+        if (!this._loadComplete) {
+          Polymer.RenderStatus.afterNextRender(this, () => {
+            Polymer.importHref(this.resolveUrl('lazy-resources.html'), () => {
+              this._registerServiceWorker();
+              this._loadComplete = true;
+            });
+          });
+        }
+      }
+
+      _registerServiceWorker() {
+        if (!('serviceWorker' in navigator)) {
+          return;
+        }
+
+        navigator.serviceWorker.register('service-worker.js', {
+          scope: Polymer.rootPath
+        }).then(registration => {
+          registration.onupdatefound = () => {
+            const installingWorker = registration.installing;
+
+            installingWorker.onstatechange = () => {
+              switch (installingWorker.state) {
+                case 'installed':
+                  if (!navigator.serviceWorker.controller) {
+                    this.$.toastWebsiteOffline.open();
+                  } else {
+                    navigator.serviceWorker.controller.onstatechange = event => {
+                      if (event.target.state === 'redundant') {
+                        this.$.toastWebsiteUpdated.open();
+                      }
+                    };
+                  }
+                  break;
+                case 'redundant':
+                  throw Error('The installing Service Worker became redundant.');
+                default:
+                  break;
+              }
+            };
+          };
+        }).catch(function(error) {
+          // eslint-disable-next-line no-console
+          console.error('Service Worker registration failed:', error);
+        });
+      }
+
+      _reloadWebsite() {
+        window.location.reload();
       }
     }
 

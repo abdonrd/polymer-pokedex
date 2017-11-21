@@ -71,15 +71,6 @@ the root directory of this source tree.
       * and trailing slashes (e.g., `/my-app/`).
       */
       window.Polymer = { rootPath: '/' };
-
-      // Load and register pre-caching Service Worker
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('service-worker.js', {
-            scope: Polymer.rootPath
-          });
-        });
-      }
     </script>
 
     <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->

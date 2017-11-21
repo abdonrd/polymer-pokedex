@@ -2,6 +2,7 @@
   "entrypoint": "index.html",
   "shell": "src/app-shell.html",
   "fragments": [
+    "src/lazy-resources.html",
     "src/pages/page-not-found.html",
     "src/pages/page-pokemons-detail.html",
     "src/pages/page-pokemons-list.html"

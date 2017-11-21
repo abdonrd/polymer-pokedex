@@ -61,4 +61,15 @@ newManifest['/pokemons/.*'] = Object.assign({
   pushManifest['src/pages/page-pokemons-detail.html'],
   navigateRequestPreloads);
 
+// Dedup assets already pushed by shell -
+// https://github.com/Polymer/polymer-build/issues/260
+const dedupedLazyResourcesAssets = {};
+const lazyResourcesAssets = pushManifest['src/lazy-resources.html'];
+Object.keys(lazyResourcesAssets).forEach((asset) => {
+  if (!newManifest['/'][asset]) {
+    dedupedLazyResourcesAssets[asset] = lazyResourcesAssets[asset];
+  }
+});
+newManifest['src/lazy-resources.html'] = dedupedLazyResourcesAssets;
+
 fs.writeFileSync(pushManifestPath, JSON.stringify(newManifest, null, 2));
