@@ -1,6 +1,6 @@
 {
-  "name": "Polydex",
-  "short_name": "Polydex",
+  "name": "Polymer Pokédex",
+  "short_name": "Pokédex",
   "description": "Pokédex built with Polymer",
   "icons": [
     {
