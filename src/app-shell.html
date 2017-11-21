@@ -34,6 +34,7 @@ the root directory of this source tree.
           pokemons="[[_pokemons]]">
       </page-pokemons-list>
       <page-pokemons-detail
+          id="pokemonsDetail"
           name="pokemonsDetail"
           pokemon="[[_pokemonSelected]]">
       </page-pokemons-detail>
@@ -95,6 +96,7 @@ the root directory of this source tree.
               this._pokemons = jsonResponse;
             });
         } else if (pageId === 'pokemons' && pokemonId) { // Route: /pokemons/:id
+          this.$.pokemonsDetail.placeholder = true;
           this._selectPage('pokemonsDetail');
 
           fetch(`${this._apiUrl}/pokemon/${Number(pokemonId) - 1}.json`)

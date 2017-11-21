@@ -28,6 +28,30 @@ the root directory of this source tree.
         animation: 10s linear infinite animate-background;
       }
 
+      :host([placeholder]) img,
+      :host([placeholder]) main {
+        opacity: 0;
+      }
+
+      :host(:not([placeholder])) img,
+      :host(:not([placeholder])) main {
+        opacity: 1;
+      }
+
+      :host(:not([placeholder])) img {
+        transform: scale(.8);
+        animation-name: big;
+        animation-duration: .4s;
+        animation-fill-mode: forwards;
+      }
+
+      :host(:not([placeholder])) main {
+        transform: translateY(100vh);
+        animation-name: slide-up;
+        animation-duration: .6s;
+        animation-fill-mode: forwards;
+      }
+
       img {
         display: block;
         margin: 0 auto;
@@ -35,18 +59,11 @@ the root directory of this source tree.
         height: 256px;
         line-height: 256px;
         text-align: center;
-        transform: scale(.8);
-        animation-name: big;
-        animation-duration: .4s;
-        animation-fill-mode: forwards;
+        transition: opacity 1s;
       }
 
       main {
         padding-bottom: 100px;
-        transform: translateY(100vh);
-        animation-name: slide-up;
-        animation-duration: .6s;
-        animation-fill-mode: forwards;
       }
 
       h1 {
@@ -200,11 +217,18 @@ the root directory of this source tree.
           pokemon: {
             type: Object,
             observer: '_pokemonChanged'
+          },
+
+          placeholder: {
+            type: Boolean,
+            value: true,
+            reflectToAttribute: true
           }
         };
       }
 
       _pokemonChanged() {
+        this.placeholder = false;
         Polymer.Async.microTask.run(() => this.scrollTo(0, 0));
       }
 
