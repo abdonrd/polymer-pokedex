@@ -87,19 +87,21 @@ the root directory of this source tree.
         const pokemonId = pathParts[1];
 
         if (pageId === '' || (pageId === 'pokemons' && !pokemonId)) { // Route: / or /pokemons
-          fetch(`${this._apiUrl}/pokemons.json`).then((response) => {
-            return response.json();
-          }).then((jsonResponse) => {
-            this._pokemons = jsonResponse;
-            this._selectPage('pokemonsList');
-          });
+          this._selectPage('pokemonsList');
+
+          fetch(`${this._apiUrl}/pokemons.json`)
+            .then((response) => response.json())
+            .then((jsonResponse) => {
+              this._pokemons = jsonResponse;
+            });
         } else if (pageId === 'pokemons' && pokemonId) { // Route: /pokemons/:id
-          fetch(`${this._apiUrl}/pokemon/${Number(pokemonId) - 1}.json`).then((response) => {
-            return response.json();
-          }).then((jsonResponse) => {
-            this._pokemonSelected = jsonResponse;
-            this._selectPage('pokemonsDetail');
-          });
+          this._selectPage('pokemonsDetail');
+
+          fetch(`${this._apiUrl}/pokemon/${Number(pokemonId) - 1}.json`)
+            .then((response) => response.json())
+            .then((jsonResponse) => {
+              this._pokemonSelected = jsonResponse;
+            });
         } else {
           this._selectPage(pageId);
         }
