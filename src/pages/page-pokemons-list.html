@@ -63,14 +63,15 @@ the root directory of this source tree.
     <style>
       :host {
         display: block;
+        background-image: linear-gradient(#f9f1ff, #c8e0ff);
         height: 100vh;
         overflow-x: auto;
-        background-image: linear-gradient(#f9f1ff, #c8e0ff);
+        padding: .5em;
+        box-sizing: border-box;
       }
 
       vaadin-text-field {
-        width: calc(100% - 8px * 2);
-        margin: 8px;
+        width: 100%;
       }
 
       ul {
@@ -78,9 +79,9 @@ the root directory of this source tree.
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        margin: 8px;
         padding: 0;
         list-style-type: none;
+        margin: 1em 0;
       }
 
       li,
