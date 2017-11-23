@@ -1,0 +1,25 @@
+<!--
+@license
+
+Copyright (c) 2017-present, Abdón Rodríguez Davila (@abdonrd).
+
+This source code is licensed under the MIT license found in the LICENSE file in
+the root directory of this source tree.
+-->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-72184997-3"></script>
+
+<script>
+  class AppAnalytics extends HTMLElement {
+    connectedCallback() {
+      /* eslint-disable */
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', this.getAttribute('key'));
+      /* eslint-enable */
+    }
+  }
+  customElements.define('app-analytics', AppAnalytics);
+</script>
