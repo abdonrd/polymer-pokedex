@@ -70,6 +70,10 @@ the root directory of this source tree.
         box-sizing: border-box;
       }
 
+      [hidden] {
+        display: none !important;
+      }
+
       vaadin-text-field {
         width: 100%;
       }
@@ -84,6 +88,12 @@ the root directory of this source tree.
         margin: 1em 0;
       }
 
+      li {
+        width: 96px;
+        height: 96px;
+        background-image: radial-gradient(#d5d4fd 10%, transparent 55%);
+      }
+
       li,
       li a {
         display: inline-flex;
@@ -94,7 +104,6 @@ the root directory of this source tree.
         height: 96px;
         line-height: 96px;
         text-align: center;
-        background-image: radial-gradient(#d5d4fd 10%, transparent 55%);
       }
     </style>
 
@@ -111,7 +120,7 @@ the root directory of this source tree.
           as="pokemon"
           filter="[[_filterPokemon(searchString)]]">
         <li>
-          <a href$="[[rootPath]]pokemons/[[pokemon.id]]">
+          <a href$="[[rootPath]]pokemons/[[pokemon.id]]" hidden$="[[!pokemon]]">
             <img src$="[[pokemon.image]]" alt$="[[pokemon.name]]">
           </a>
         </li>
@@ -128,7 +137,8 @@ the root directory of this source tree.
       static get properties() {
         return {
           pokemons: {
-            type: Array
+            type: Array,
+            value: () => (new Array(50)).fill(null)
           }
         };
       }
