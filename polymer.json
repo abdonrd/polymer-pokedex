@@ -12,6 +12,7 @@
     "src/**/*"
   ],
   "extraDependencies": [
+    "data/**/*",
     "manifest.json",
     "bower_components/webcomponentsjs/*.js"
   ],
@@ -21,17 +22,7 @@
   "builds": [
     {
       "preset": "es5-bundled",
-      "addPushManifest": false,
-      "basePath": true
-    },
-    {
-      "preset": "es6-bundled",
-      "addPushManifest": false,
-      "basePath": true
-    },
-    {
-      "preset": "es6-unbundled",
-      "basePath": true
+      "addPushManifest": false
     }
   ]
 }

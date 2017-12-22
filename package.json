@@ -16,12 +16,7 @@
     "serve": "polymer serve",
     "lint": "eslint . --ext js,html --ignore-path .gitignore",
     "test:integration": "yarn run build",
-    "build": "polymer build && yarn run build:add-data",
-    "build:add-data": "cp -r data/ build/data/",
-    "build:copy-prpl-files": "cp prpl-server/app.yaml prpl-server/package.json prpl-server/yarn.lock build/",
-    "build:dedup-assets": "node prpl-server/dedup_assets.js",
-    "build:add-entrypoint-push": "node prpl-server/add_entrypoint_push.js",
-    "build:prpl": "yarn run build && yarn run build:copy-prpl-files && yarn run build:dedup-assets && yarn run build:add-entrypoint-push"
+    "build": "polymer build"
   },
   "engines": {
     "node": ">=6.0"
