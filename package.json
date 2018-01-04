@@ -16,7 +16,10 @@
     "start": "polymer serve",
     "lint": "eslint . --ext js,html --ignore-path .gitignore",
     "test:integration": "yarn run build",
-    "build": "polymer build"
+    "build": "polymer build && yarn run build:add-data",
+    "build:add-data": "cp -r data/ build/data/",
+    "build:copy-prpl-files": "cp prpl-server/app.yaml prpl-server/package.json prpl-server/yarn.lock build/",
+    "build:prpl": "yarn run build && yarn run build:copy-prpl-files"
   },
   "engines": {
     "node": ">=6.0"
