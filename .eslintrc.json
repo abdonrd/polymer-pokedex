@@ -5,5 +5,12 @@
   },
   "globals": {
     "Polymer": true
+  },
+  "rules": {
+    "line-comment-position": ["error", {
+      "position": "above",
+      "ignorePattern": "Route: ",
+      "applyDefaultPatterns": true
+    }]
   }
 }
