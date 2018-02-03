@@ -10,10 +10,10 @@
     "eslint": "^4.11.0",
     "eslint-config-ibmresearch": "^0.9.0",
     "eslint-plugin-html": "^4.0.0",
-    "polymer-cli": "^1.5.0"
+    "polymer-cli": "^1.6.0"
   },
   "scripts": {
-    "serve": "polymer serve",
+    "start": "polymer serve",
     "lint": "eslint . --ext js,html --ignore-path .gitignore",
     "test:integration": "yarn run build",
     "build": "polymer build"
